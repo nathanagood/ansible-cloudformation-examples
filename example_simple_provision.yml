@@ -31,10 +31,11 @@
           pEC2InstanceName: bastion-host
         tags:
           Stack: "ansible-cloudformation"
+      register: cfn
 
 
     - name: Add public IPs to host group
-      add_host: hostname={{ cloudformation.stack_outputs['InstanceHostName'] }} groups=ec2hosts
+      add_host: hostname={{ cfn.stack_outputs['InstanceHostName'] }} groups=ec2hosts
 
 - hosts: ec2hosts
   name: Configure
