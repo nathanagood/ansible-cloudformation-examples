@@ -13,8 +13,8 @@
 
     - name: Create the CloudFormation stack
       cloudformation:
-        aws_access_key: "{{aws_access_key}}"
-        aws_secret_access_key: "{{aws_secret_access_key}}"
+        aws_access_key: "{{aws_key}}"
+        aws_secret_access_key: "{{aws_secret}}"
         stack_name: "ansible-cloudformation"
         state: "present"
         region: "us-east-1"
