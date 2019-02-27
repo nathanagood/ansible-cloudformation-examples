@@ -1,0 +1,3 @@
+[submodule "cloudformation-examples"]
+	path = cloudformation-examples
+	url = git@github.com:nathanagood/cloudformation-examples.git

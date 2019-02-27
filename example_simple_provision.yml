@@ -1,0 +1,37 @@
+# example_simple_provision.yml
+# ----------------------------------------------------------------------------
+# This example demonstrates how one might go about using a CloudFormation 
+# template to provision EC2 instances, then run an Ansible playbook on the
+# newly-provisioned EC2 instance.
+# ----------------------------------------------------------------------------
+
+- hosts: localhost
+  connection: local
+  gather_facts: False
+
+  tasks:
+
+    - name: Create the CloudFormation stack
+      cloudformation:
+        aws_access_key: "{{aws_access_key}}"
+        aws_access_key: "{{aws_secret_key}}"
+        stack_name: "ansible-cloudformation"
+        state: "present"
+        region: "us-east-1"
+        disable_rollback: true
+        template: "cloudformation-examples/example-linux-ec2.yml"
+        template_parameters:
+          pInstanceProfile: jenkinsRole
+          pApplicationName: bastion
+          pSshKeyName: nathang-default
+          pInstanceSize: t2.micro
+          pEC2SecurityGroupIds: sg-03a07a88a4b90adac
+          pLinuxType: Amazon
+          pSubnetId: subnet-c267e7a5
+          pEC2InstanceName: bastion-host
+        tags:
+          Stack: "ansible-cloudformation"
+
+    # - name: Sleep until the CloudFormation stack is complete
+    #   wait_for: timeout=600
+    #   delegate_to: localhost
