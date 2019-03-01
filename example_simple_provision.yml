@@ -37,6 +37,9 @@
     - name: Add public IPs to host group
       add_host: hostname={{ cfn.stack_outputs['InstanceHostName'] }} groups=ec2hosts
 
+    - name: Debug
+      debug: var=ansible_facts
+
 - hosts: ec2hosts
   name: Configure
   user: ec2-user
