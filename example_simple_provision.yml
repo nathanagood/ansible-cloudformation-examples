@@ -52,5 +52,38 @@
     - name: Install web server
       become: yes
       yum:
-        name: httpd
+        name: {{item}}
         state: present
+      with_items:
+        - httpd
+        - java-1.8.0-openjdk
+
+    - name: Create wildfly group
+      group:
+        name: wildfly
+        state: present
+
+    - name: Create wildfly user
+      user:
+        name: wildfly
+        comment: Wildfly Service Account
+        group: wildfly
+        state: present
+        shell: /bin/nologin
+        home: /opt/wildfly
+
+    - name: Download Wildfly server
+      unarchive:
+        src: https://download.jboss.org/wildfly/16.0.0.Final/wildfly-16.0.0.Final.tar.gz
+        dest: /opt/wildfly
+        remote_src: yes
+        owner: wildfly
+        group: wildfly
+        extra_opts:
+          - "--strip"
+          - "1"
+
+    - name: Start Wildfly server
+      shell: "nohup /opt/wildfly/bin/standalone.sh -b=0.0.0.0 -bmanagement=0.0.0.0 > /var/log/wildfly-cmd-out.log 2>&1 &"
+      poll: 0
+
