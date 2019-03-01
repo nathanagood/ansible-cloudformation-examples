@@ -13,24 +13,23 @@
 
     - name: Create the CloudFormation stack
       cloudformation:
-        # aws_access_key: "{{aws_key}}"
-        # aws_secret_key: "{{aws_secret}}"
-        stack_name: "ansible-cloudformation"
+        stack_name: "{{param_stack_name}}"
         state: "present"
         region: "us-east-1"
         disable_rollback: true
         template: "cloudformation-examples/example-linux-ec2.yml"
         template_parameters:
-          pInstanceProfile: jenkinsRole
-          pApplicationName: bastion
-          pSshKeyName: nathang-default
-          pInstanceSize: t2.micro
-          pEC2SecurityGroupIds: sg-03a07a88a4b90adac
-          pLinuxType: Amazon
-          pSubnetId: subnet-c267e7a5
-          pEC2InstanceName: bastion-host
+          pInstanceProfile: "{{param_instance_profile}}"
+          pApplicationName: "{{param_application_name}}"
+          pSshKeyName: "{{param_ssh_key_name}}"
+          pInstanceSize: "{{param_instance_size}}"
+          pEC2SecurityGroupIds: "{{param_ec2_security_group_ids}}"
+          pLinuxType: "{{param_linux_type}}"
+          pSubnetId: "{{param_subnet_id}}"
+          pEC2InstanceName: "{{param_ec2_instance_name}}"
         tags:
-          Stack: "ansible-cloudformation"
+          Stack: "{{param_stack_name}}"
+          CreatedBy: "Ansible Tower ({{ansible_version}}) at {{ansible_host}} "
       register: cfn
 
 
