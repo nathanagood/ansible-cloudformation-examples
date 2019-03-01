@@ -52,16 +52,16 @@
     - name: Install web server
       become: yes
       yum:
-        name: "{{item}}"
-        state: present
-      with_items:
+        name:
         - httpd
         - java-1.8.0-openjdk
+        state: present
 
     - name: Create wildfly group
       group:
         name: wildfly
         state: present
+      become: yes
 
     - name: Create wildfly user
       user:
@@ -71,6 +71,7 @@
         state: present
         shell: /bin/nologin
         home: /opt/wildfly
+      become: yes
 
     - name: Download Wildfly server
       unarchive:
@@ -82,8 +83,11 @@
         extra_opts:
           - "--strip"
           - "1"
+      become: yes
 
     - name: Start Wildfly server
       shell: "nohup /opt/wildfly/bin/standalone.sh -b=0.0.0.0 -bmanagement=0.0.0.0 > /var/log/wildfly-cmd-out.log 2>&1 &"
       poll: 0
+      become: yes
+      become_user: wildfly
 
