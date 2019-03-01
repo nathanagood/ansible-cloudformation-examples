@@ -90,7 +90,7 @@
         path: /opt/wildfly/standalone/logs
         state: directory
         mode: 0755
-        user: wildfly
+        owner: wildfly
         group: wildfly
       become: yes
 
