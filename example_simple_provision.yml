@@ -85,9 +85,13 @@
           - "1"
       become: yes
 
+    - name: Create log directory
+      file:
+        path: /opt/wildfly/standalone/logs
+        state: directory
+        mode: 0755
+
     - name: Start Wildfly server
-      shell: "nohup /opt/wildfly/bin/standalone.sh -b=0.0.0.0 -bmanagement=0.0.0.0 > /var/log/wildfly-cmd-out.log 2>&1 &"
+      shell: "nohup /opt/wildfly/bin/standalone.sh -b=0.0.0.0 -bmanagement=0.0.0.0 > /opt/wildfly/standalone/logs/wildfly-cmd-out.log 2>&1 &"
       poll: 0
       become: yes
-      become_user: wildfly
-
