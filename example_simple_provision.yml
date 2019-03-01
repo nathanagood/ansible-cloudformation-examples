@@ -44,7 +44,7 @@
   name: Configure
   user: ec2-user
   gather_facts: true
-  ansible_become_method: sudo
+  become_method: sudo
   # vars:
   #   ansible_ssh_private_key_file: "{{aws_ssh_key}}"
 
