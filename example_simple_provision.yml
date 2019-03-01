@@ -90,6 +90,9 @@
         path: /opt/wildfly/standalone/logs
         state: directory
         mode: 0755
+        user: wildfly
+        group: wildfly
+      become: yes
 
     - name: Start Wildfly server
       shell: "nohup /opt/wildfly/bin/standalone.sh -b=0.0.0.0 -bmanagement=0.0.0.0 > /opt/wildfly/standalone/logs/wildfly-cmd-out.log 2>&1 &"
