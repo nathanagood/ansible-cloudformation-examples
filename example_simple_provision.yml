@@ -39,6 +39,10 @@
     - name: Debug
       debug: var=ansible_facts
 
+# ----------------------------------------------------------------------------
+# Now apply the following steps to the hosts that were created in the previous
+# stack.
+# ----------------------------------------------------------------------------
 - hosts: ec2hosts
   name: Configure
   user: ec2-user
