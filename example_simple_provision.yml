@@ -52,12 +52,15 @@
   user: ec2-user
   gather_facts: true
   become_method: sudo
-  retries: 3
-  timeout: 20
   # vars:
   #   ansible_ssh_private_key_file: "{{aws_ssh_key}}"
 
   tasks:
+    - name: Waiting for server connection...
+      wait_for_connection:
+        delay: 60
+        timeout: 300
+
     - name: Install web server
       become: yes
       yum:
