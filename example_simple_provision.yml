@@ -65,7 +65,6 @@
       become: yes
       yum:
         name:
-        - httpd
         - java-1.8.0-openjdk
         state: present
 
