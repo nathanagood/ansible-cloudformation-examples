@@ -34,10 +34,14 @@
 
 
     - name: Add public IPs to host group
-      add_host: hostname={{ cfn.stack_outputs['InstanceHostName'] }} groups=ec2hosts
+      add_host: hostname={{ cfn.stack_outputs['InstancePrivateIPAddress'] }} groups=ec2hosts
 
     - name: Debug
       debug: var=ansible_facts
+
+    - name: Waiting...
+      pause:
+        seconds: 30
 
 # ----------------------------------------------------------------------------
 # Now apply the following steps to the hosts that were created in the previous
@@ -48,6 +52,8 @@
   user: ec2-user
   gather_facts: true
   become_method: sudo
+  retries: 3
+  timeout: 20
   # vars:
   #   ansible_ssh_private_key_file: "{{aws_ssh_key}}"
 
